@@ -41,7 +41,11 @@ jobs:
           cache-dependency-path: Vikaasa-Project/Frontend/package-lock.json
       - name: Install dependencies
         working-directory: Vikaasa-Project/Frontend
-        run: npm ci
+        run: |
+          # The committed lockfile contains unpublished Babel 7.29.7 entries.
+          # Regenerate dependencies from package.json until the lockfile is refreshed.
+          rm -f package-lock.json
+          npm install
       - name: Build frontend
         working-directory: Vikaasa-Project/Frontend
         run: npm run build
